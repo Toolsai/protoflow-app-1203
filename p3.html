@@ -1,0 +1,268 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>儀表板 - 財務概覽</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+        }
+
+        /* 3D Ring Effect */
+        .ring-outer {
+            stroke-dasharray: 600;
+            stroke-dashoffset: 150;
+            filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.6));
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: all 1s ease-out;
+        }
+
+        .ring-inner {
+            stroke-dasharray: 500;
+            stroke-dashoffset: 200;
+            filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.6));
+            transform: rotate(-45deg);
+            transform-origin: center;
+        }
+
+        .balance-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-item-active {
+            color: #22d3ee;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-24">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center px-6 py-6 sticky top-0 z-50 bg-[#0f172a]/80 backdrop-blur-md">
+        <div class="flex items-center space-x-3" data-goto="p7">
+            <img src="https://picsum.photos/seed/user/100/100" class="w-10 h-10 rounded-full border-2 border-cyan-400 p-0.5" alt="Profile">
+            <div>
+                <p class="text-xs text-slate-400">午安,</p>
+                <p class="font-bold text-sm">張曉明 Alex</p>
+            </div>
+        </div>
+        <div class="flex space-x-4">
+            <button class="w-10 h-10 rounded-xl glass-card flex items-center justify-center relative">
+                <i class="fa-solid fa-bell text-slate-300"></i>
+                <span class="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full"></span>
+            </button>
+            <button class="w-10 h-10 rounded-xl glass-card flex items-center justify-center" data-goto="p7">
+                <i class="fa-solid fa-gear text-slate-300"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="px-6">
+        
+        <!-- Hero Section: 3D Visualization -->
+        <section class="flex flex-col items-center justify-center py-8">
+            <div class="chart-container flex items-center justify-center">
+                <svg class="absolute w-full h-full" viewBox="0 0 200 200">
+                    <!-- Background Rings -->
+                    <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="12" />
+                    <!-- Visual Geometric Rings -->
+                    <circle class="ring-outer" cx="100" cy="100" r="85" fill="none" stroke="url(#cyanGradient)" stroke-width="14" stroke-linecap="round" />
+                    <circle class="ring-inner" cx="100" cy="100" r="70" fill="none" stroke="url(#purpleGradient)" stroke-width="10" stroke-linecap="round" />
+                    
+                    <defs>
+                        <linearGradient id="cyanGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#22d3ee;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#d946ef;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                
+                <div class="text-center z-10 animate-float">
+                    <p class="text-slate-400 text-sm font-medium tracking-widest uppercase mb-1">總資產淨值</p>
+                    <h1 class="text-5xl font-extrabold balance-glow tracking-tight text-white mb-2">$12,580</h1>
+                    <div class="flex items-center justify-center text-emerald-400 text-sm font-semibold">
+                        <i class="fa-solid fa-arrow-trend-up mr-1"></i>
+                        <span>+12.5% 本月</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="grid grid-cols-4 gap-4 mb-8">
+            <button data-goto="p4" class="flex flex-col items-center space-y-2 group">
+                <div class="w-14 h-14 rounded-2xl glass-card flex items-center justify-center group-active:scale-95 transition-all text-cyan-400">
+                    <i class="fa-solid fa-plus text-xl"></i>
+                </div>
+                <span class="text-xs font-medium text-slate-300">新增</span>
+            </button>
+            <button class="flex flex-col items-center space-y-2 group">
+                <div class="w-14 h-14 rounded-2xl glass-card flex items-center justify-center group-active:scale-95 transition-all text-violet-400">
+                    <i class="fa-solid fa-qrcode text-xl"></i>
+                </div>
+                <span class="text-xs font-medium text-slate-300">掃描</span>
+            </button>
+            <button data-goto="p5" class="flex flex-col items-center space-y-2 group">
+                <div class="w-14 h-14 rounded-2xl glass-card flex items-center justify-center group-active:scale-95 transition-all text-amber-400">
+                    <i class="fa-solid fa-chart-pie text-xl"></i>
+                </div>
+                <span class="text-xs font-medium text-slate-300">分析</span>
+            </button>
+            <button class="flex flex-col items-center space-y-2 group">
+                <div class="w-14 h-14 rounded-2xl glass-card flex items-center justify-center group-active:scale-95 transition-all text-rose-400">
+                    <i class="fa-solid fa-wallet text-xl"></i>
+                </div>
+                <span class="text-xs font-medium text-slate-300">帳戶</span>
+            </button>
+        </section>
+
+        <!-- Recent Transactions -->
+        <section>
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold">近期交易</h3>
+                <button data-goto="p6" class="text-cyan-400 text-sm font-semibold">查看全部</button>
+            </div>
+            
+            <div class="space-y-4 overflow-y-auto max-h-64 custom-scrollbar pr-1">
+                <!-- Item 1 -->
+                <div class="flex items-center justify-between p-4 glass-card rounded-2xl" data-goto="p6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400">
+                            <i class="fa-solid fa-mug-hot"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold">星巴克咖啡</p>
+                            <p class="text-xs text-slate-400">今天 14:30 · 飲食</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-rose-400">-$155</p>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="flex items-center justify-between p-4 glass-card rounded-2xl" data-goto="p6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center text-emerald-400">
+                            <i class="fa-solid fa-money-bill-trend-up"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold">薪資轉入</p>
+                            <p class="text-xs text-slate-400">昨天 09:00 · 收入</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-emerald-400">+$3,200</p>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="flex items-center justify-between p-4 glass-card rounded-2xl" data-goto="p6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-400">
+                            <i class="fa-solid fa-tv"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold">Netflix 訂閱</p>
+                            <p class="text-xs text-slate-400">05月20日 · 娛樂</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-rose-400">-$390</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-[#0f172a]/90 backdrop-blur-xl border-t border-white/5 px-8 py-4 flex justify-between items-center z-50">
+        <button class="flex flex-col items-center space-y-1 nav-item-active" data-goto="p3">
+            <i class="fa-solid fa-house-chimney text-xl"></i>
+            <span class="text-[10px] font-bold">總覽</span>
+        </button>
+        <button class="flex flex-col items-center space-y-1 text-slate-500" data-goto="p5">
+            <i class="fa-solid fa-chart-column text-xl"></i>
+            <span class="text-[10px] font-medium">分析</span>
+        </button>
+        <div class="relative -mt-12">
+            <button class="w-14 h-14 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-full shadow-lg shadow-cyan-500/40 flex items-center justify-center text-white text-2xl" data-goto="p4">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+        <button class="flex flex-col items-center space-y-1 text-slate-500" data-goto="p6">
+            <i class="fa-solid fa-receipt text-xl"></i>
+            <span class="text-[10px] font-medium">明細</span>
+        </button>
+        <button class="flex flex-col items-center space-y-1 text-slate-500" data-goto="p7">
+            <i class="fa-solid fa-user text-xl"></i>
+            <span class="text-[10px] font-medium">個人</span>
+        </button>
+    </nav>
+
+    <script>
+        // Optional logic to animate the ring numbers if we were using a real chart library, 
+        // but for this static prototype, the CSS transitions handle the initial load feeling.
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("Dashboard p3 Loaded");
+        });
+    </script>
+
+<script>
+  // Pro Prototype - Static Navigation Shim
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-goto]');
+      if (target) {
+        e.preventDefault();
+        const pageId = target.getAttribute('data-goto');
+        // Navigate to the corresponding HTML file
+        window.location.href = pageId + '.html';
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+```
