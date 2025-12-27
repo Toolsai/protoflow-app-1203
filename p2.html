@@ -1,0 +1,177 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歡迎與登入 - 現代金融</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FDFCF8; /* Cream white */
+        }
+        .asymmetric-shape {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+        }
+        .input-underline {
+            border: none;
+            border-bottom: 4px solid #000;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+        .input-underline:focus {
+            border-bottom-color: #EAB308; /* Yellow-500 */
+            outline: none;
+        }
+        .yellow-btn-float {
+            box-shadow: 10px 10px 0px 0px rgba(0,0,0,1);
+        }
+        .yellow-btn-float:active {
+            box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
+            transform: translate(4px, 4px);
+        }
+        /* Custom scrollbar for aesthetics */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #000;
+        }
+    </style>
+</head>
+<body class="text-black overflow-x-hidden">
+
+    <div class="min-h-screen flex flex-col">
+        <!-- Top Navigation -->
+        <nav class="p-6 flex justify-between items-center z-10">
+            <button data-goto="p1" class="text-black hover:opacity-60 transition-opacity">
+                <i class="fa-solid fa-chevron-left text-xl"></i>
+            </button>
+            <div class="font-extrabold tracking-tighter text-xl">FIN.OS</div>
+        </nav>
+
+        <!-- Main Layout: Asymmetric Grid -->
+        <main class="flex-grow grid grid-cols-12 gap-0 relative">
+            
+            <!-- Left Side: Large Visual/Text -->
+            <div class="col-span-12 lg:col-span-7 p-8 lg:p-16 flex flex-col justify-center">
+                <div class="relative">
+                    <span class="text-xs font-bold uppercase tracking-widest bg-yellow-400 px-2 py-1 inline-block mb-4">Hello There</span>
+                    <h1 class="text-6xl lg:text-8xl font-extrabold leading-none tracking-tight mb-8">
+                        WELCOME <br> <span class="text-transparent" style="-webkit-text-stroke: 1.5px black;">TO THE</span> <br> FUTURE.
+                    </h1>
+                    <div class="max-w-md text-gray-500 font-medium leading-relaxed">
+                        管理您的資產從未如此直觀。簡約，即是極致的複雜。
+                    </div>
+                </div>
+
+                <!-- Abstract Asymmetric Element -->
+                <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-slate-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 pointer-events-none"></div>
+            </div>
+
+            <!-- Right Side: Login Form -->
+            <div class="col-span-12 lg:col-span-5 bg-white lg:bg-transparent px-8 py-12 lg:py-16 relative">
+                <div class="max-w-sm mx-auto lg:mr-0 lg:ml-auto">
+                    
+                    <div class="mb-16">
+                        <h2 class="text-2xl font-extrabold mb-10">登入您的帳戶</h2>
+                        
+                        <!-- Minimalist Inputs with thick black underlines -->
+                        <div class="space-y-12">
+                            <div class="relative group">
+                                <label class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 transition-colors group-focus-within:text-yellow-500">使用者名稱 / 電子郵件</label>
+                                <input type="text" placeholder="example@finos.com" class="input-underline w-full py-3 text-lg font-semibold placeholder:text-gray-200">
+                            </div>
+
+                            <div class="relative group">
+                                <label class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 transition-colors group-focus-within:text-yellow-500">通行密碼</label>
+                                <input type="password" placeholder="••••••••" class="input-underline w-full py-3 text-lg font-semibold placeholder:text-gray-200">
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex justify-between items-center">
+                            <button class="text-xs font-bold text-gray-400 hover:text-black transition-colors">忘記密碼？</button>
+                            <button class="text-xs font-bold text-gray-400 hover:text-black transition-colors">尚未註冊？</button>
+                        </div>
+                    </div>
+
+                    <!-- Large Yellow Circular Login Button -->
+                    <div class="flex justify-center lg:justify-end mt-12">
+                        <button data-goto="p3" class="yellow-btn-float w-28 h-28 lg:w-36 lg:h-36 bg-yellow-400 rounded-full border-4 border-black flex flex-col items-center justify-center transition-all duration-200 group">
+                            <i class="fa-solid fa-arrow-right text-3xl group-hover:translate-x-2 transition-transform"></i>
+                            <span class="text-[10px] font-black mt-2 uppercase">Login</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asymmetric Background Image/Graphic (Mobile only hides or stays bottom) -->
+            <div class="hidden lg:block absolute bottom-0 right-1/2 translate-x-1/2 w-1/3 h-1/2 z-[-1] opacity-5">
+                <img src="https://picsum.photos/seed/p2/800/800" alt="background" class="w-full h-full object-cover grayscale">
+            </div>
+        </main>
+
+        <!-- Footer / Social Login -->
+        <footer class="p-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex gap-4">
+                <button class="w-10 h-10 border-2 border-black rounded-full flex items-center justify-center hover:bg-black hover:text-white transition-all">
+                    <i class="fa-brands fa-google"></i>
+                </button>
+                <button class="w-10 h-10 border-2 border-black rounded-full flex items-center justify-center hover:bg-black hover:text-white transition-all">
+                    <i class="fa-brands fa-apple"></i>
+                </button>
+                <button class="w-10 h-10 border-2 border-black rounded-full flex items-center justify-center hover:bg-black hover:text-white transition-all">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </button>
+            </div>
+            <div class="text-[10px] font-bold text-gray-400 tracking-widest uppercase">
+                © 2024 FIN.OS DESIGN SYSTEM — ALL RIGHTS RESERVED
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Simple page transition logic for the prototype
+        document.querySelectorAll('[data-goto]').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetPage = button.getAttribute('data-goto');
+                console.log(`Navigating to ${targetPage}`);
+                // In a real scenario, this would trigger router navigation.
+                // For this demo, we can just alert or simulate a fade out.
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    // This is a placeholder for actual navigation logic
+                    // In the final combined file, this would switch visibility of page containers
+                    location.reload(); 
+                }, 300);
+            });
+        });
+
+        // Entrance animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+            document.body.classList.add('transition-opacity', 'duration-500');
+        });
+    </script>
+
+<script>
+  // Pro Prototype - Static Navigation Shim
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-goto]');
+      if (target) {
+        e.preventDefault();
+        const pageId = target.getAttribute('data-goto');
+        // Navigate to the corresponding HTML file
+        window.location.href = pageId + '.html';
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+```
