@@ -1,0 +1,368 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-Hant" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>數據分析 - Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* 3D Chart Styles */
+        .scene {
+            perspective: 800px;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding-bottom: 20px;
+        }
+
+        .bar-container {
+            position: relative;
+            width: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .cuboid {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateY(-20deg) rotateX(10deg);
+        }
+
+        .cuboid div {
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+        }
+
+        .face-front {
+            height: var(--bar-height);
+            background: linear-gradient(to top, var(--color-start), var(--color-end));
+            transform: translateZ(15px);
+        }
+
+        .face-top {
+            height: 30px;
+            background: var(--color-end);
+            transform: rotateX(90deg) translateZ(calc(var(--bar-height) - 15px));
+            filter: brightness(1.2);
+        }
+
+        .face-side {
+            height: var(--bar-height);
+            width: 30px;
+            background: var(--color-start);
+            transform: rotateY(90deg) translateZ(15px);
+            filter: brightness(0.7);
+        }
+
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .active-dot {
+            box-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+        }
+    </style>
+</head>
+<body class="max-w-md mx-auto min-h-screen pb-24">
+
+    <!-- Header -->
+    <header class="p-6 flex justify-between items-center sticky top-0 bg-slate-900/80 backdrop-blur-md z-50">
+        <button data-goto="p3" class="w-10 h-10 rounded-full flex items-center justify-center bg-slate-800 text-slate-300 hover:text-white transition-colors">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <h1 class="text-xl font-bold tracking-tight">支出分析</h1>
+        <button class="w-10 h-10 rounded-full flex items-center justify-center bg-slate-800 text-slate-300">
+            <i class="fa-solid fa-share-nodes"></i>
+        </button>
+    </header>
+
+    <!-- Month Selector -->
+    <div class="px-6 py-4">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-slate-400 text-sm font-medium">總支出 (2023)</span>
+            <span class="text-slate-500 text-xs">單位: TWD</span>
+        </div>
+        <div class="flex items-end justify-between overflow-x-auto no-scrollbar gap-6 py-4">
+            <div class="flex flex-col items-center opacity-40">
+                <span class="text-xs mb-1">六月</span>
+                <div class="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
+            </div>
+            <div class="flex flex-col items-center opacity-40">
+                <span class="text-xs mb-1">七月</span>
+                <div class="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
+            </div>
+            <div class="flex flex-col items-center scale-110">
+                <span class="text-lg font-bold text-white mb-1">八月</span>
+                <div class="w-2 h-2 rounded-full bg-blue-500 active-dot"></div>
+            </div>
+            <div class="flex flex-col items-center opacity-40">
+                <span class="text-xs mb-1">九月</span>
+                <div class="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
+            </div>
+            <div class="flex flex-col items-center opacity-40">
+                <span class="text-xs mb-1">十月</span>
+                <div class="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main 3D Chart Area -->
+    <div class="px-6 mb-8">
+        <div class="glass-card rounded-3xl p-6 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4">
+                <div class="text-right">
+                    <p class="text-xs text-slate-400">本月支出</p>
+                    <p class="text-2xl font-black text-blue-400">$42,850</p>
+                </div>
+            </div>
+            
+            <!-- 3D Scene -->
+            <div class="scene mt-12">
+                <!-- Bar 1 -->
+                <div class="bar-container" style="--bar-height: 80px; --color-start: #3b82f6; --color-end: #60a5fa;">
+                    <div class="cuboid">
+                        <div class="face-front"></div>
+                        <div class="face-top"></div>
+                        <div class="face-side"></div>
+                    </div>
+                    <p class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-slate-500">W1</p>
+                </div>
+                <!-- Bar 2 -->
+                <div class="bar-container" style="--bar-height: 140px; --color-start: #8b5cf6; --color-end: #a78bfa;">
+                    <div class="cuboid">
+                        <div class="face-front"></div>
+                        <div class="face-top"></div>
+                        <div class="face-side"></div>
+                    </div>
+                    <p class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-slate-500 font-bold text-slate-300">W2</p>
+                </div>
+                <!-- Bar 3 -->
+                <div class="bar-container" style="--bar-height: 110px; --color-start: #ec4899; --color-end: #f472b6;">
+                    <div class="cuboid">
+                        <div class="face-front"></div>
+                        <div class="face-top"></div>
+                        <div class="face-side"></div>
+                    </div>
+                    <p class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-slate-500">W3</p>
+                </div>
+                <!-- Bar 4 -->
+                <div class="bar-container" style="--bar-height: 160px; --color-start: #10b981; --color-end: #34d399;">
+                    <div class="cuboid">
+                        <div class="face-front"></div>
+                        <div class="face-top"></div>
+                        <div class="face-side"></div>
+                    </div>
+                    <p class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-slate-500">W4</p>
+                </div>
+                <!-- Bar 5 -->
+                <div class="bar-container" style="--bar-height: 95px; --color-start: #f59e0b; --color-end: #fbbf24;">
+                    <div class="cuboid">
+                        <div class="face-front"></div>
+                        <div class="face-top"></div>
+                        <div class="face-side"></div>
+                    </div>
+                    <p class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-slate-500">W5</p>
+                </div>
+            </div>
+            
+            <div class="mt-10 pt-6 border-t border-slate-700/50 flex justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                    <span class="text-xs text-slate-400">趨勢穩定</span>
+                </div>
+                <div class="text-xs text-blue-400 font-medium">+12% vs 上月</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Breakdown -->
+    <div class="px-6 mb-4">
+        <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-chart-pie text-blue-500"></i> 分類佔比
+        </h2>
+        
+        <div class="space-y-3">
+            <!-- Category Item 1 -->
+            <div class="bg-slate-800/50 p-4 rounded-2xl flex items-center justify-between border border-transparent hover:border-blue-500/30 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-orange-500/20 text-orange-500 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">飲食</h3>
+                        <p class="text-xs text-slate-500">42 筆交易</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="font-bold">$12,400</p>
+                    <div class="w-24 h-1.5 bg-slate-700 rounded-full mt-2 overflow-hidden">
+                        <div class="h-full bg-orange-500 w-[28.9%]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Item 2 -->
+            <div class="bg-slate-800/50 p-4 rounded-2xl flex items-center justify-between border border-transparent hover:border-blue-500/30 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-500 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-bus"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">交通</h3>
+                        <p class="text-xs text-slate-500">18 筆交易</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="font-bold">$5,200</p>
+                    <div class="w-24 h-1.5 bg-slate-700 rounded-full mt-2 overflow-hidden">
+                        <div class="h-full bg-blue-500 w-[12.1%]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Item 3 -->
+            <div class="bg-slate-800/50 p-4 rounded-2xl flex items-center justify-between border border-transparent hover:border-blue-500/30 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-500 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">購物</h3>
+                        <p class="text-xs text-slate-500">12 筆交易</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="font-bold">$18,600</p>
+                    <div class="w-24 h-1.5 bg-slate-700 rounded-full mt-2 overflow-hidden">
+                        <div class="h-full bg-purple-500 w-[43.4%]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Item 4 -->
+            <div class="bg-slate-800/50 p-4 rounded-2xl flex items-center justify-between border border-transparent hover:border-blue-500/30 transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-500 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">健康</h3>
+                        <p class="text-xs text-slate-500">3 筆交易</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="font-bold">$3,150</p>
+                    <div class="w-24 h-1.5 bg-slate-700 rounded-full mt-2 overflow-hidden">
+                        <div class="h-full bg-emerald-500 w-[7.3%]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommendations Card -->
+    <div class="px-6 mb-8">
+        <div class="bg-gradient-to-br from-indigo-600 to-blue-700 p-5 rounded-3xl relative overflow-hidden shadow-xl shadow-blue-500/20">
+            <div class="relative z-10">
+                <h3 class="font-bold text-white mb-1 italic">AI 智能建議</h3>
+                <p class="text-sm text-blue-100 opacity-90 leading-relaxed">您的「購物」支出比上個月增加了 24%。建議本週減少非必要消費，以達成儲蓄目標。</p>
+            </div>
+            <i class="fa-solid fa-robot absolute -bottom-4 -right-2 text-6xl text-white/10"></i>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-900/90 backdrop-blur-xl border-t border-slate-800 px-8 py-4 flex justify-between items-center z-[100]">
+        <button data-goto="p3" class="text-slate-500 hover:text-blue-500 flex flex-col items-center">
+            <i class="fa-solid fa-house text-xl"></i>
+            <span class="text-[10px] mt-1">首頁</span>
+        </button>
+        <button data-goto="p5" class="text-blue-500 flex flex-col items-center">
+            <i class="fa-solid fa-chart-column text-xl"></i>
+            <span class="text-[10px] mt-1">分析</span>
+        </button>
+        <button data-goto="p4" class="bg-blue-600 w-12 h-12 rounded-full flex items-center justify-center -mt-10 shadow-lg shadow-blue-600/40 border-4 border-slate-900">
+            <i class="fa-solid fa-plus text-white text-xl"></i>
+        </button>
+        <button data-goto="p6" class="text-slate-500 hover:text-blue-500 flex flex-col items-center">
+            <i class="fa-solid fa-list-ul text-xl"></i>
+            <span class="text-[10px] mt-1">明細</span>
+        </button>
+        <button data-goto="p7" class="text-slate-500 hover:text-blue-500 flex flex-col items-center">
+            <i class="fa-solid fa-user text-xl"></i>
+            <span class="text-[10px] mt-1">設定</span>
+        </button>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle Navigation
+            const buttons = document.querySelectorAll('[data-goto]');
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-goto');
+                    console.log(`Navigating to: ${targetId}`);
+                    // In a real app, this would trigger page routing
+                    // For prototype, we alert or log
+                    // window.location.href = `${targetId}.html`; 
+                });
+            });
+
+            // Simulate "swiping" animation logic for chart
+            const bars = document.querySelectorAll('.bar-container');
+            bars.forEach((bar, index) => {
+                bar.style.transitionDelay = `${index * 100}ms`;
+                bar.style.opacity = '0';
+                bar.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    bar.style.opacity = '1';
+                    bar.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        });
+    </script>
+
+<script>
+  // Pro Prototype - Static Navigation Shim
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-goto]');
+      if (target) {
+        e.preventDefault();
+        const pageId = target.getAttribute('data-goto');
+        // Navigate to the corresponding HTML file
+        window.location.href = pageId + '.html';
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+```
