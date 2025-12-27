@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "topic": "new project",
+  "createdAt": "2025-12-27T09:03:46.403Z",
+  "pages": [
+    {
+      "id": "p1",
+      "title": "啟動頁 (Splash Screen)",
+      "description": "藝術與數字的交匯：全螢幕 Three.js 畫布展示旋轉的紅球、黃方塊與藍三角，中央顯示 Bauhaus Ledger 字樣。點擊任意處進入下一步。",
+      "status": "completed",
+      "suggestedNavigation": [
+        "p2"
+      ]
+    },
+    {
+      "id": "p2",
+      "title": "歡迎與登入 (Login/Onboarding)",
+      "description": "歡迎進入：採用不對稱網格佈局，包含兩條粗黑底線的極簡輸入框與一個大型黃色圓形登入按鈕。",
+      "status": "completed",
+      "suggestedNavigation": [
+        "p1",
+        "p3"
+      ]
+    },
+    {
+      "id": "p3",
+      "title": "儀表板 (Dashboard)",
+      "description": "財務概覽：視覺核心為 3D 幾何環形圖表，上方顯示大字重餘額「$12,580」，下方設有固定底部導覽列。",
+      "status": "completed",
+      "suggestedNavigation": [
+        "p7",
+        "p4",
+        "p5",
+        "p6",
+        "p3"
+      ]
+    },
+    {
+      "id": "p4",
+      "title": "新增交易 (Add Transaction)",
+      "description": "紀錄收支：具備巨大的網格數字鍵盤，分類選擇使用正方形（餐飲）、圓形（交通）、三角形（娛樂）等幾何圖示。",
+      "status": "completed",
+      "suggestedNavigation": [
+        "p3"
+      ]
+    },
+    {
+      "id": "p5",
+      "title": "數據分析 (Analysis)",
+      "description": "幾何趨勢：使用 3D 彩色長方體柱狀圖展示支出，支持左右滑動切換月份，並列出詳細的分類佔比。",
+      "status": "completed",
+      "suggestedNavigation": [
+        "p3",
+        "p5",
+        "p4",
+        "p6",
+        "p7"
+      ]
+    },
+    {
+      "id": "p6",
+      "title": "交易明細 (History Ledger)",
+      "description": "歷史紀錄：以粗黑垂直線作為時間軸，每筆交易顯示為白色方塊，具備鮮明的陰影與邊框細節。",
+      "status": "completed",
+      "suggestedNavigation": [
+        "p3",
+        "p6",
+        "p5",
+        "p4",
+        "p7"
+      ]
+    },
+    {
+      "id": "p7",
+      "title": "個人設定 (Settings & Profile)",
+      "description": "個人偏好：包豪斯海報風格的排版，包含幾何切割的頭像區域、功能清單以及顯眼的紅色矩形登出按鈕。",
+      "status": "completed",
+      "suggestedNavigation": [
+        "p3",
+        "p7",
+        "p2",
+        "p6",
+        "p5"
+      ]
+    }
+  ]
+}
