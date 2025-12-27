@@ -1,0 +1,226 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人設定 - Bauhaus Style</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F2F2F2;
+            color: #1A1A1A;
+        }
+
+        .bauhaus-border {
+            border: 3px solid #1A1A1A;
+        }
+
+        .bauhaus-red { background-color: #E63946; }
+        .bauhaus-yellow { background-color: #FFB703; }
+        .bauhaus-blue { background-color: #1D3557; }
+        
+        .geometric-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape-1 {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: #FFB703;
+            top: -100px;
+            right: -50px;
+            transform: rotate(45deg);
+        }
+
+        .shape-2 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: #1D3557;
+            bottom: 100px;
+            left: -80px;
+            border-radius: 50%;
+        }
+
+        /* Bauhaus Grid Animation/Layout */
+        .list-item-bauhaus {
+            transition: all 0.2s ease;
+            border-bottom: 2px solid #1A1A1A;
+        }
+        .list-item-bauhaus:hover {
+            background-color: #1A1A1A;
+            color: white;
+            padding-left: 1.5rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex justify-center items-start">
+
+    <!-- Decorative Background Elements -->
+    <div class="geometric-bg">
+        <div class="shape-1"></div>
+        <div class="shape-2"></div>
+    </div>
+
+    <!-- Main Container (Mobile focused responsive) -->
+    <div class="w-full max-w-md bg-[#F2F2F2] min-h-screen flex flex-col relative shadow-2xl border-x-4 border-black">
+        
+        <!-- Header Section -->
+        <header class="p-6 pt-12 relative overflow-hidden">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h1 class="text-6xl font-black uppercase leading-none tracking-tighter">
+                        PRO<br>FILE
+                    </h1>
+                    <p class="mt-4 font-bold text-lg border-l-8 border-black pl-3 uppercase">Settings & Personal</p>
+                </div>
+                <button data-goto="p3" class="bauhaus-border p-3 hover:bg-black hover:text-white transition-colors">
+                    <i class="fa-solid fa-arrow-left text-xl"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Profile Section with Geometric Cuts -->
+        <section class="px-6 py-8">
+            <div class="relative w-full aspect-square max-w-[280px] mx-auto">
+                <!-- Large Decorative Square Behind -->
+                <div class="absolute inset-0 bauhaus-yellow translate-x-4 translate-y-4"></div>
+                <!-- Main Avatar Container -->
+                <div class="absolute inset-0 bg-white bauhaus-border overflow-hidden">
+                    <img src="https://picsum.photos/seed/p7/400/400" alt="Avatar" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                </div>
+                <!-- Blue Geometric Element -->
+                <div class="absolute -bottom-4 -left-4 w-24 h-24 bauhaus-blue flex items-center justify-center text-white">
+                    <i class="fa-solid fa-pen text-xl"></i>
+                </div>
+                <!-- Identity Tag -->
+                <div class="absolute top-8 -right-8 bg-black text-white px-4 py-1 rotate-90 origin-left text-xs tracking-widest font-bold">
+                    UID: 8820-X
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <h2 class="text-3xl font-black uppercase">Alex Anderson</h2>
+                <p class="text-gray-600 font-medium">alex.bauhaus@design.com</p>
+            </div>
+        </section>
+
+        <!-- Function List -->
+        <nav class="flex-grow mt-8 px-6 pb-24">
+            <div class="border-t-4 border-black">
+                
+                <button data-goto="p7" class="list-item-bauhaus w-full flex justify-between items-center py-5 text-left group">
+                    <span class="text-xl font-bold uppercase">Account Security</span>
+                    <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+
+                <button data-goto="p7" class="list-item-bauhaus w-full flex justify-between items-center py-5 text-left group">
+                    <span class="text-xl font-bold uppercase">Notifications</span>
+                    <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+
+                <button data-goto="p7" class="list-item-bauhaus w-full flex justify-between items-center py-5 text-left group">
+                    <span class="text-xl font-bold uppercase">Appearance</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-black text-white px-2 py-1">DARK</span>
+                        <i class="fa-solid fa-chevron-right text-sm"></i>
+                    </div>
+                </button>
+
+                <button data-goto="p7" class="list-item-bauhaus w-full flex justify-between items-center py-5 text-left group">
+                    <span class="text-xl font-bold uppercase">Currency: TWD</span>
+                    <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+
+                <button data-goto="p7" class="list-item-bauhaus w-full flex justify-between items-center py-5 text-left group">
+                    <span class="text-xl font-bold uppercase">Privacy Policy</span>
+                    <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+
+            </div>
+
+            <!-- Logout Button -->
+            <div class="mt-12">
+                <button data-goto="p2" class="w-full bg-[#E63946] text-white py-6 text-2xl font-black uppercase shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all active:bg-red-700">
+                    Log Out
+                </button>
+            </div>
+        </nav>
+
+        <!-- Bottom Navigation Bar (Fixed-style but within container) -->
+        <footer class="mt-auto border-t-4 border-black bg-white grid grid-cols-4 sticky bottom-0">
+            <button data-goto="p3" class="py-4 hover:bg-yellow-400 transition-colors border-r-2 border-black">
+                <i class="fa-solid fa-house text-xl"></i>
+            </button>
+            <button data-goto="p6" class="py-4 hover:bg-blue-400 transition-colors border-r-2 border-black">
+                <i class="fa-solid fa-list-ul text-xl"></i>
+            </button>
+            <button data-goto="p5" class="py-4 hover:bg-red-400 transition-colors border-r-2 border-black">
+                <i class="fa-solid fa-chart-pie text-xl"></i>
+            </button>
+            <button data-goto="p7" class="py-4 bg-black text-white">
+                <i class="fa-solid fa-user text-xl"></i>
+            </button>
+        </footer>
+    </div>
+
+    <!-- Interactions -->
+    <script>
+        document.querySelectorAll('[data-goto]').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetPage = button.getAttribute('data-goto');
+                console.log('Navigating to:', targetPage);
+                // In a real app, this would trigger a page change or router event.
+                // For this prototype, we'll alert or just console log.
+                // If it's the current page, we'll just flash the background.
+                if(targetPage === 'p7') {
+                    button.classList.add('bg-gray-200');
+                    setTimeout(() => button.classList.remove('bg-gray-200'), 200);
+                } else {
+                    document.body.style.opacity = '0.5';
+                    setTimeout(() => {
+                        window.location.href = `#${targetPage}`;
+                        document.body.style.opacity = '1';
+                        // Simple notification to show the navigation triggered
+                        const toast = document.createElement('div');
+                        toast.className = 'fixed top-4 left-1/2 -translate-x-1/2 bg-black text-white px-6 py-3 font-bold bauhaus-border z-50';
+                        toast.innerText = `Navigating to Page ID: ${targetPage}`;
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.remove(), 2000);
+                    }, 300);
+                }
+            });
+        });
+    </script>
+
+<script>
+  // Pro Prototype - Static Navigation Shim
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-goto]');
+      if (target) {
+        e.preventDefault();
+        const pageId = target.getAttribute('data-goto');
+        // Navigate to the corresponding HTML file
+        window.location.href = pageId + '.html';
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+```
