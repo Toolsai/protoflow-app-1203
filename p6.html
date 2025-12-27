@@ -1,0 +1,246 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交易明細 (History Ledger)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .neo-shadow {
+            box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+        }
+
+        .timeline-line {
+            width: 4px;
+            background-color: #000;
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+        }
+
+        .nav-active {
+            color: #000;
+            border-bottom: 3px solid #000;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #000;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="max-w-md mx-auto min-h-screen bg-slate-50 relative pb-24">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b-2 border-black p-5 flex justify-between items-center">
+        <button data-goto="p3" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <i class="fa-solid fa-chevron-left text-xl"></i>
+        </button>
+        <h1 class="text-xl font-extrabold tracking-tight">交易明細</h1>
+        <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+            <i class="fa-solid fa-sliders text-xl"></i>
+        </button>
+    </header>
+
+    <!-- Search & Filter Area -->
+    <div class="p-5">
+        <div class="relative group">
+            <input type="text" placeholder="搜尋交易..." class="w-full pl-12 pr-4 py-3 bg-white border-2 border-black rounded-xl focus:outline-none neo-shadow transition-transform focus:-translate-y-1">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        </div>
+        
+        <div class="flex gap-2 mt-6 overflow-x-auto pb-2">
+            <button class="px-5 py-2 bg-black text-white rounded-full text-sm font-bold whitespace-nowrap">全部</button>
+            <button class="px-5 py-2 bg-white border-2 border-black rounded-full text-sm font-bold whitespace-nowrap hover:bg-slate-100">支出</button>
+            <button class="px-5 py-2 bg-white border-2 border-black rounded-full text-sm font-bold whitespace-nowrap hover:bg-slate-100">收入</button>
+            <button class="px-5 py-2 bg-white border-2 border-black rounded-full text-sm font-bold whitespace-nowrap hover:bg-slate-100">轉帳</button>
+        </div>
+    </div>
+
+    <!-- Timeline Container -->
+    <div class="relative px-5">
+        <div class="timeline-line"></div>
+
+        <!-- Date Group 1 -->
+        <div class="mb-10 relative">
+            <div class="flex items-center mb-6">
+                <div class="w-4 h-4 rounded-full bg-black border-4 border-white ring-4 ring-black/10 z-10 ml-6 mr-4"></div>
+                <span class="text-sm font-black uppercase tracking-widest text-slate-500">今天, 10月 24日</span>
+            </div>
+
+            <!-- Transaction Item -->
+            <div data-goto="p6" class="ml-10 mb-6 bg-white border-2 border-black p-4 rounded-2xl neo-shadow flex items-center gap-4 transition-transform hover:scale-[1.02] cursor-pointer">
+                <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center border-2 border-black">
+                    <i class="fa-solid fa-burger text-orange-600"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-gray-900 text-lg leading-tight">午餐：拉麵屋</h3>
+                    <p class="text-xs font-medium text-slate-400 mt-1">12:30 • 飲食</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-black text-red-500 text-lg">- $280</p>
+                    <p class="text-[10px] font-bold text-slate-400">現金付款</p>
+                </div>
+            </div>
+
+            <!-- Transaction Item -->
+            <div data-goto="p6" class="ml-10 mb-6 bg-white border-2 border-black p-4 rounded-2xl neo-shadow flex items-center gap-4 transition-transform hover:scale-[1.02] cursor-pointer">
+                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center border-2 border-black">
+                    <i class="fa-solid fa-bus-simple text-blue-600"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-gray-900 text-lg leading-tight">悠遊卡自動加值</h3>
+                    <p class="text-xs font-medium text-slate-400 mt-1">08:15 • 交通</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-black text-red-500 text-lg">- $500</p>
+                    <p class="text-[10px] font-bold text-slate-400">信用卡</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Date Group 2 -->
+        <div class="mb-10 relative">
+            <div class="flex items-center mb-6">
+                <div class="w-4 h-4 rounded-full bg-black border-4 border-white ring-4 ring-black/10 z-10 ml-6 mr-4"></div>
+                <span class="text-sm font-black uppercase tracking-widest text-slate-500">昨天, 10月 23日</span>
+            </div>
+
+            <!-- Transaction Item -->
+            <div data-goto="p6" class="ml-10 mb-6 bg-white border-2 border-black p-4 rounded-2xl neo-shadow flex items-center gap-4 transition-transform hover:scale-[1.02] cursor-pointer">
+                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center border-2 border-black">
+                    <i class="fa-solid fa-money-bill-transfer text-green-600"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-gray-900 text-lg leading-tight">專案獎金匯入</h3>
+                    <p class="text-xs font-medium text-slate-400 mt-1">16:45 • 工作</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-black text-emerald-500 text-lg">+ $15,000</p>
+                    <p class="text-[10px] font-bold text-slate-400">銀行轉帳</p>
+                </div>
+            </div>
+
+            <!-- Transaction Item -->
+            <div data-goto="p6" class="ml-10 mb-6 bg-white border-2 border-black p-4 rounded-2xl neo-shadow flex items-center gap-4 transition-transform hover:scale-[1.02] cursor-pointer">
+                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center border-2 border-black">
+                    <i class="fa-solid fa-shirt text-purple-600"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-gray-900 text-lg leading-tight">Uniqlo 秋季服飾</h3>
+                    <p class="text-xs font-medium text-slate-400 mt-1">14:20 • 購物</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-black text-red-500 text-lg">- $2,490</p>
+                    <p class="text-[10px] font-bold text-slate-400">Apple Pay</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Date Group 3 -->
+        <div class="mb-10 relative">
+            <div class="flex items-center mb-6">
+                <div class="w-4 h-4 rounded-full bg-black border-4 border-white ring-4 ring-black/10 z-10 ml-6 mr-4"></div>
+                <span class="text-sm font-black uppercase tracking-widest text-slate-500">10月 22日</span>
+            </div>
+
+            <!-- Transaction Item -->
+            <div data-goto="p6" class="ml-10 mb-6 bg-white border-2 border-black p-4 rounded-2xl neo-shadow flex items-center gap-4 transition-transform hover:scale-[1.02] cursor-pointer">
+                <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center border-2 border-black">
+                    <i class="fa-solid fa-heart text-pink-600"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-gray-900 text-lg leading-tight">Netflix 月費</h3>
+                    <p class="text-xs font-medium text-slate-400 mt-1">00:01 • 娛樂</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-black text-red-500 text-lg">- $390</p>
+                    <p class="text-[10px] font-bold text-slate-400">自動扣款</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t-4 border-black px-6 py-3 flex justify-between items-center z-50">
+        <button data-goto="p3" class="flex flex-col items-center gap-1 text-gray-400">
+            <i class="fa-solid fa-house text-xl"></i>
+            <span class="text-[10px] font-bold">儀表板</span>
+        </button>
+        <button data-goto="p5" class="flex flex-col items-center gap-1 text-gray-400">
+            <i class="fa-solid fa-chart-pie text-xl"></i>
+            <span class="text-[10px] font-bold">數據</span>
+        </button>
+        <button data-goto="p4" class="relative -mt-12 w-14 h-14 bg-black text-white rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+            <i class="fa-solid fa-plus text-2xl"></i>
+        </button>
+        <button data-goto="p6" class="flex flex-col items-center gap-1 text-black">
+            <i class="fa-solid fa-list-ul text-xl"></i>
+            <span class="text-[10px] font-bold">明細</span>
+        </button>
+        <button data-goto="p7" class="flex flex-col items-center gap-1 text-gray-400">
+            <i class="fa-solid fa-user text-xl"></i>
+            <span class="text-[10px] font-bold">設定</span>
+        </button>
+    </nav>
+
+    <script>
+        // Simple Interaction logic for prototype
+        document.querySelectorAll('[data-goto]').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-goto');
+                console.log(`Navigating to ${targetId}`);
+                // In a real scenario, this would trigger the SPA router
+                // For this template, we just visually provide the feedback
+                button.classList.add('scale-95');
+                setTimeout(() => button.classList.remove('scale-95'), 100);
+            });
+        });
+
+        // Pull to refresh simulation or scroll effects can be added here
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+
+
+<script>
+  // Pro Prototype - Static Navigation Shim
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-goto]');
+      if (target) {
+        e.preventDefault();
+        const pageId = target.getAttribute('data-goto');
+        // Navigate to the corresponding HTML file
+        window.location.href = pageId + '.html';
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+```
